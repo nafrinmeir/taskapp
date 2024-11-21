@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Task Management</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Team Task Management</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <!-- Task Input Section -->
+            <section class="task-input">
+                <h2>Add a New Task</h2>
+                <form id="taskForm" onsubmit="addTask(event)">
+                    <div class="form-group">
+                        <input type="text" id="taskTitle" placeholder="TaskTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="taskAssignee" placeholder="Assignee" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskStartDate">Start Date:</label>
+                        <input type="date" id="taskStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskEndDate">End Date:</label>
+                        <input type="date" id="taskEndDate" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="taskDescription" placeholder="Task Description" required></textarea>
+                    </div>
+                    <button type="submit">Add Task</button>
+                </form>
+            </section>
+
+            <!-- Task List Section -->
+            <section class="task-list">
+                <h2>All Tasks</h2>
+                <div id="tasks">
+                    <!-- Tasks will be dynamically displayed here -->
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NoyaTech. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Link to JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
