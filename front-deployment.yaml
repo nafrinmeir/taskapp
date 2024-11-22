@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: front
-        image: nafrin/python:front-1.0.0
+        image: nafrin/python:front-<TAG>
         ports:
         - containerPort: 5000
         env:
