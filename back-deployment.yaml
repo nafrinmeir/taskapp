@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: back
-        image: nafrin/python:back-1.0.0
+        image: nafrin/python:back-<TAG>
         ports:
         - containerPort: 5001
         env:
