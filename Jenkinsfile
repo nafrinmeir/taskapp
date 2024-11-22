@@ -87,7 +87,7 @@ pipeline {
                 sh """
                 docker run --rm nafrin/python:front-${VERSION} pytest tests/
                 docker run --rm nafrin/python:back-${VERSION} pytest tests/
-                kubectl exec -it $(kubectl get pod -l app=mongo -o jsonpath='{.items[0].metadata.name}') -- mongo --eval 'db.stats()'
+                kubectl exec -it \$(kubectl get pod -l app=mongo -o jsonpath='{.items[0].metadata.name}') -- mongo --eval 'db.stats()'
                 """
             }
         }
