@@ -17,6 +17,7 @@ pipeline {
                 sh '''
                 git config --global http.sslVerify false
                 '''
+                checkout scm
             }
         }
 
