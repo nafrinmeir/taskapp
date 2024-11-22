@@ -13,7 +13,10 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/nafrinmeir/taskapp.git'
+                //git branch: 'main', url: 'https://github.com/nafrinmeir/taskapp.git'
+                sh '''
+                git config --global http.sslVerify false
+                '''
             }
         }
 
