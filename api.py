@@ -7,9 +7,26 @@ CORS(app)  # Allow cross-origin requests
 
 # MongoDB configuration
 # mongo_client = MongoClient("mongodb://localhost:27017/")  # MongoDB URI
-mongo_client = MongoClient("mongodb://<HOSTNAME>:27017/")  # MongoDB URI 
-db = mongo_client["MyAppDB"]  # Database name
-tasks_collection = db["tasks"]  # Collection name
+# mongo_client = MongoClient("mongodb://<HOSTNAME>:27017/")  # MongoDB URI 
+# db = mongo_client["MyAppDB"]  # Database name
+# tasks_collection = db["tasks"]  # Collection name
+
+
+# MongoDB connection details
+username = "admin"
+password = "admin"
+host = "localhost"
+port = 27017
+database_name = "MyAppDB"
+auth_database = "admin"
+
+# Create the connection URI
+mongo_uri = f"mongodb://{username}:{password}@{host}:{port}/{database_name}?authSource={auth_database}"
+
+# Connect to MongoDB
+client = MongoClient(mongo_uri)
+db = client[database_name]
+
 
 @app.route('/api/tasks', methods=['POST'])
 def add_task():
