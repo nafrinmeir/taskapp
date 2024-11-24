@@ -6,7 +6,8 @@ app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
 # MongoDB configuration
-mongo_client = MongoClient("mongodb://localhost:27017/")  # MongoDB URI
+# mongo_client = MongoClient("mongodb://localhost:27017/")  # MongoDB URI
+mongo_client = MongoClient("mongodb://<HOSTNAME>:27017/")  # MongoDB URI 
 db = mongo_client["MyAppDB"]  # Database name
 tasks_collection = db["tasks"]  # Collection name
 
