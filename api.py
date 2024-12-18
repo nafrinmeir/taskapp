@@ -5,17 +5,10 @@ from pymongo import MongoClient
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
-# MongoDB configuration
-# mongo_client = MongoClient("mongodb://localhost:27017/")  # MongoDB URI
-# mongo_client = MongoClient("mongodb://<HOSTNAME>:27017/")  # MongoDB URI 
-# db = mongo_client["MyAppDB"]  # Database name
-# tasks_collection = db["tasks"]  # Collection name
-
-
 # MongoDB connection details
 username = "admin"
 password = "admin"
-host = "localhost"
+host = "mongodb"  # Use service name defined in docker-compose.yml
 port = 27017
 database_name = "MyAppDB"
 auth_database = "admin"
@@ -26,7 +19,7 @@ mongo_uri = f"mongodb://{username}:{password}@{host}:{port}/{database_name}?auth
 # Connect to MongoDB
 client = MongoClient(mongo_uri)
 db = client[database_name]
-
+tasks_collection = db["tasks"]  # Initialize the tasks collection
 
 @app.route('/api/tasks', methods=['POST'])
 def add_task():
