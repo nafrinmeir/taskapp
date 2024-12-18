@@ -1,11 +1,32 @@
+version: '3.8'
+
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.back
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend
+
   mongodb:
-    image: mongo:latest
-    container_name: mongodb-container
-    volumes:
-      - ./init.js:/docker-entrypoint-initdb.d/init.js
+    build:
+      context: .
+      dockerfile: Dockerfile.mongodb
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
