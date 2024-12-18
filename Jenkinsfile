@@ -1,9 +1,12 @@
 pipeline {
-    agent {
-        node {
-            label 'meirpc'
-        }
-    }
+
+    agent any
+    
+    //agent {
+    //    node {
+    //        label 'meirpc'
+    //    }
+    //}
 
     parameters {
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'Enter the version tag for the Docker image.')
