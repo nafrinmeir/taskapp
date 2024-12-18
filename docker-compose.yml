@@ -1,8 +1,8 @@
 services:
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.back
     image: nafrin/python-backend
     ports:
       - "5001:5001"
@@ -11,8 +11,8 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.front
     image: nafrin/python-frontend
     ports:
       - "5000:5000"
@@ -21,8 +21,8 @@ services:
 
   mongodb:
     build:
-      context: ./mongodb
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.mongodb
     image: nafrin/python-mongodb
     ports:
       - "27017:27017"
