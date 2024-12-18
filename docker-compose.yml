@@ -1,10 +1,9 @@
-version: '3.8'
-
 services:
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile.back
+      context: ./backend
+      dockerfile: Dockerfile
+    image: nafrin/python-backend
     ports:
       - "5001:5001"
     depends_on:
@@ -12,8 +11,9 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.front
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: nafrin/python-frontend
     ports:
       - "5000:5000"
     depends_on:
@@ -21,8 +21,9 @@ services:
 
   mongodb:
     build:
-      context: .
-      dockerfile: Dockerfile.mongodb
+      context: ./mongodb
+      dockerfile: Dockerfile
+    image: nafrin/python-mongodb
     ports:
       - "27017:27017"
     volumes:
