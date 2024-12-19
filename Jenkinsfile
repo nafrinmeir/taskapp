@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+    
+    //agent any
+
+    agent {
+        node {
+            label 'meirpc'
+        }
+    }
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
