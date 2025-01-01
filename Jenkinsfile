@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'VERSION', defaultValue: 'latest', description: 'Docker image and Kubernetes version')
+        string(name: 'VERSION', defaultValue: '2.0.0', description: 'Docker image and Kubernetes version')
     }
 
     environment {
