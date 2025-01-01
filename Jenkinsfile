@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+    
+    //agent any
+
+    agent {
+        node {
+            label 'meirpc'
+        }
+    }
 
     parameters {
         string(name: 'VERSION', defaultValue: '2.0.0', description: 'Docker image and Kubernetes version')
