@@ -1,18 +1,15 @@
 pipeline {
-    
-    // agent any
+    agent any
 
-    agent {
-        node {
-            label 'meirpc'
-        }
+    parameters {
+        string(name: 'VERSION', defaultValue: 'latest', description: 'Docker image and Kubernetes version')
     }
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_IMAGE_PREFIX = 'nafrin/python'
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
-        VERSION = 'v1.0.0'
+        KUBE_CONFIG_PATH = 'C:/Users/MyPc/.kube/config'
     }
 
     stages {
@@ -22,32 +19,21 @@ pipeline {
             }
         }
 
-        stage('Build and Tag Images') {
+        stage('Build Docker Images') {
             steps {
                 script {
-                    // Build images using Docker Compose
                     bat "docker-compose -f %DOCKER_COMPOSE_FILE% build --no-cache"
-
-                    // Verify built images
-                    bat "docker-compose images"
-
-                    // Tag images with the version
-                    bat """
-                        FOR /F "tokens=*" %%I IN ('docker-compose config --services') DO (
-                            docker tag %DOCKER_IMAGE_PREFIX%-%%I %DOCKER_IMAGE_PREFIX%-%%I:%VERSION%
-                        )
-                    """
                 }
             }
         }
 
-        stage('Push Images to Docker Hub') {
+        stage('Push Docker Images') {
             steps {
                 script {
-                    // Log in to Docker Hub and push images
                     withDockerRegistry([credentialsId: 'docker_hub_user', url: DOCKER_REGISTRY]) {
                         bat """
-                            FOR /F "tokens=*" %%I IN ('docker-compose config --services') DO (
+                            docker-compose config --services | for /f "delims=" %%I in ('more') do (
+                                docker tag %DOCKER_IMAGE_PREFIX%-%%I %DOCKER_IMAGE_PREFIX%-%%I:%VERSION%
                                 docker push %DOCKER_IMAGE_PREFIX%-%%I:%VERSION%
                             )
                         """
@@ -55,14 +41,17 @@ pipeline {
                 }
             }
         }
-        
-        stage('Launch Application') {
+
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Run the Docker Compose to launch the application (frontend, backend, mongodb)
-                    bat """
-                        docker-compose -f %DOCKER_COMPOSE_FILE% up -d
-                    """
+                    withEnv(["KUBECONFIG=${KUBE_CONFIG_PATH}"]) {
+                        bat """
+                            kubectl apply -f back-deployment.yaml || exit /b 1
+                            kubectl apply -f front-deployment.yaml || exit /b 1
+                            kubectl apply -f mongo-deployment.yaml || exit /b 1
+                        """
+                    }
                 }
             }
         }
