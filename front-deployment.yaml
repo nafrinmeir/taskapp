@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: front
-        # image: nafrin/python-frontend:${VERSION}
-        image: nafrin/python-frontend:<VERSION>
+        image: nafrin/python-frontend:${VERSION}
         ports:
         - containerPort: 5000
         env:
