@@ -7,13 +7,13 @@ front:
 
 back:
   replicas: 1
-  image: nafrin/python
+  image: nafrin/python-backend
   version: 2.0.0
   port: 5001
   mongoUrl: "mongodb://mongo:27017"
 
 mongo:
   replicas: 1
-  image: mongo
+  image: nafrin/python-mongodb
   version: 2.0.0
   port: 27017
