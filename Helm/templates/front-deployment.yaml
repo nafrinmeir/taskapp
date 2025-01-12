@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment
+spec:
+  replicas: {{ .Values.front.replicas }}
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        image: {{ .Values.front.image }}:{{ .Values.front.version }}
+        ports:
+        - containerPort: {{ .Values.front.port }}
+        env:
+        - name: BACKEND_URL
+          value: {{ .Values.front.backendUrl | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service
+spec:
+  selector:
+    app: front
+  ports:
+    - protocol: TCP
+      port: {{ .Values.front.port }}
+      targetPort: {{ .Values.front.port }}
+  type: ClusterIP
