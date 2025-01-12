@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mongo
-        image: mongo:${VERSION}
+        image: nafrin/python-mongodb:${VERSION}
         ports:
         - containerPort: 27017
 
