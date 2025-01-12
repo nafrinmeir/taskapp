@@ -1,19 +1,19 @@
 front:
   replicas: 1
   image: nafrin/python-frontend
-  version: latest
+  version: 2.0.0
   port: 5000
   backendUrl: "http://back:5001"
 
 back:
   replicas: 1
   image: nafrin/python
-  version: latest
+  version: 2.0.0
   port: 5001
   mongoUrl: "mongodb://mongo:27017"
 
 mongo:
   replicas: 1
   image: mongo
-  version: latest
+  version: 2.0.0
   port: 27017
