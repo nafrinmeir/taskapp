@@ -1,12 +1,11 @@
 pipeline {
+    agent any
     
-    //agent any
-
-    agent {
-        node {
-            label 'meirpc'
-        }
-    }
+    //agent {
+    //    node {
+    //        label 'meirpc'
+    //    }
+    //}
 
     parameters {
         string(name: 'VERSION', defaultValue: '2.0.0', description: 'Docker image and Kubernetes version')
@@ -29,7 +28,8 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    bat "docker-compose -f %DOCKER_COMPOSE_FILE% build --no-cache"
+                    //bat "docker-compose -f %DOCKER_COMPOSE_FILE% build --no-cache"
+                    bat "docker-compose -f %DOCKER_COMPOSE_FILE% build"
                 }
             }
         }
@@ -48,15 +48,27 @@ pipeline {
                 }
             }
         }
+        
+        stage('unit test') {
+            steps {
+                script {
+                        bat """
+                        echo test
+                        """
+                }
+            }
+        }
 
         stage('Deploy to Kubernetes') {
             steps {
                 script {
                     withEnv(["KUBECONFIG=${KUBE_CONFIG_PATH}"]) {
                         bat """
-                            kubectl apply -f back-deployment.yaml || exit /b 1
-                            kubectl apply -f front-deployment.yaml || exit /b 1
-                            kubectl apply -f mongo-deployment.yaml || exit /b 1
+                            helm install chatapp ./helm
+                            ping localhost -4 -n 5
+                            kubectl get all
+                            ping localhost -4 -n 5
+                            kubectl get pods -o wide
                         """
                     }
                 }
