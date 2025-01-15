@@ -1,5 +1,5 @@
 front:
-  replicas: ${REPLICAS}
+  replicas: ${params.REPLICAS}
   image: nafrin/python-frontend
   version: 2.0.0
   port: 5000
