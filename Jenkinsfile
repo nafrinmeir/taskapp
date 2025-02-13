@@ -61,7 +61,7 @@ pipeline {
 
 
 
-        stage('Build Docker Images') {
+        stage('Build Docker Images and Launch Application') {
             steps {
                 script {
                     bat "docker-compose -f %DOCKER_COMPOSE_FILE% build"
@@ -80,6 +80,17 @@ pipeline {
                             )
                         """
                     }
+                }
+            }
+        }
+
+        stage('Launch Application') {
+            steps {
+                script {
+                    // Run the Docker Compose to launch the application (frontend, backend, mongodb)
+                    bat """
+                        docker-compose -f %DOCKER_COMPOSE_FILE% up -d
+                    """
                 }
             }
         }
