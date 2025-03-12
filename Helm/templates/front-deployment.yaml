@@ -32,4 +32,4 @@ spec:
     - protocol: TCP
       port: {{ .Values.front.port }}
       targetPort: {{ .Values.front.port }}
-  type: ClusterIP
+  type: NodePort
