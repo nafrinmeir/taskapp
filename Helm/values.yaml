@@ -1,7 +1,7 @@
 front:
   replicas: 1
   image: nafrin/python-frontend
-  version: 2.0.0
+  version: "{{ .Values.front.version }}"
   port: 5000
   targetPort: 5000
   backendUrl: "http://back:5001"
@@ -9,7 +9,7 @@ front:
 back:
   replicas: 1
   image: nafrin/python-backend
-  version: 2.0.0
+  version: "{{ .Values.back.version }}"
   port: 5001
   targetPort: 5001
   mongoUrl: "mongodb://mongo:27017"
@@ -17,6 +17,6 @@ back:
 mongo:
   replicas: 1
   image: nafrin/python-mongodb
-  version: 2.0.0
+  version: "{{ .Values.mongo.version }}"
   port: 27017
   targetPort: 27017 
