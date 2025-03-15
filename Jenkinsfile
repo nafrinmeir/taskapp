@@ -108,7 +108,7 @@ pipeline {
                 script {
                     withEnv(["KUBECONFIG=${KUBE_CONFIG_PATH}"]) {
                         bat """
-                            helm install chatapp ./helm
+                            helm install taskapp ./helm --set front.version=${params.VERSION} --set back.version=${params.VERSION} --set mongo.version=${params.VERSION}
                             ping localhost -4 -n 5
                             kubectl get all
                             ping localhost -4 -n 5
